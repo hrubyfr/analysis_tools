@@ -28,12 +28,8 @@ class DataLoader:
                 self.branches_to_load.append("vme_digi_issues_bitmask")
             if "vme_evt_quality_bitmask" not in self.branches_to_load and "vme_evt_quality_bitmask" in available_branches:
                 self.branches_to_load.append("vme_evt_quality_bitmask")
-            if "T5_HasValidHit" not in self.branches_to_load and "T5_HasValidHit" in available_branches:
-                self.branches_to_load.append("T5_HasValidHit")
-            if "T5_HasMultipleScintillatorsHit" not in self.branches_to_load and "T5_HasMultipleScintillatorsHit" in available_branches:
-                self.branches_to_load.append("T5_HasMultipleScintillatorsHit")
-            if "T5_HasInTimeWindow" not in self.branches_to_load and "T5_HasInTimeWindow" in available_branches:
-                self.branches_to_load.append("T5_HasInTimeWindow")
+            if "T5_hit_bitmask" not in self.branches_to_load and "T5_hit_bitmask" in available_branches:
+                self.branches_to_load.append("T5_hit_bitmask")
 
         self.mPMT_data_quality_cuts = False
         self.vme_event_quality_cuts = False
@@ -77,7 +73,7 @@ class DataLoader:
     
         if self.t5_event_quality_cuts:
             #a valid hit, only one hit in the main beam bunch, within time window
-            batch = batch[(batch["T5_HasValidHit"]==True)&(batch["T5_HasMultipleScintillatorsHit"]==False)&(batch["T5_HasInTimeWindow"]==True)]
+            batch = batch[(batch["T5_hit_bitmask"]==0)]
             if verbose:
                 print(f"After t5_event_quality_cuts cut: {len(batch)} events")  
 
